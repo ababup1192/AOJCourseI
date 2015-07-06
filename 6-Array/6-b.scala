@@ -32,16 +32,16 @@ object Card{
 
 object Main {
   def missingCardList(cardList: Seq[Card],
-    nextCard: Card = Card("S", 1), newCardList: Seq[Card] = Seq[Card]()): Seq[Card] = {
-      if(cardList.contains(nextCard) == false){
-        nextCard.getNextCard match {
-          case None => (nextCard +: newCardList).reverse
-          case Some(card) => missingCardList(cardList, card, nextCard +: newCardList)
+    card: Card = Card("S", 1), newCardList: Seq[Card] = Seq[Card]()): Seq[Card] = {
+      if(cardList.contains(card) == false){
+        card.getNextCard match {
+          case None => (card +: newCardList).reverse
+          case Some(next) => missingCardList(cardList, next, card +: newCardList)
         }
         }else{
-          nextCard.getNextCard match {
+          card.getNextCard match {
             case None => newCardList.reverse
-            case Some(card) => missingCardList(cardList, card, newCardList)
+            case Some(next) => missingCardList(cardList, next, newCardList)
           }
         }
   }
