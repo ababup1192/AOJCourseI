@@ -39,7 +39,7 @@ object Main {
       val Array(suit, rankT, _*) = in.split(" ")
     }yield(Card(suit, rankT.toInt))
     def from(card: Option[Card]): Stream[Option[Card]] = Stream.cons(card, from(card.flatMap(_.getNextCard)))
-    val fillCardList = from(Some(Card("S", 1))).takeWhile(_ != None).map(_.get).toList
+    val fillCardList = from(Some(Card("S", 1))).takeWhile(_ != None).flatten.toList
     (fillCardList diff cardList).foreach(println _)
   }
 }
