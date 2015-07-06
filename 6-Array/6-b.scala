@@ -31,30 +31,16 @@ object Card{
 }
 
 object Main {
-  def missingCardList(cardList: Seq[Card],
-    card: Card = Card("S", 1), newCardList: Seq[Card] = Seq[Card]()): Seq[Card] = {
-      if(cardList.contains(card) == false){
-        card.getNextCard match {
-          case None => (card +: newCardList).reverse
-          case Some(next) => missingCardList(cardList, next, card +: newCardList)
-        }
-        }else{
-          card.getNextCard match {
-            case None => newCardList.reverse
-            case Some(next) => missingCardList(cardList, next, newCardList)
-          }
-        }
-  }
-
-
-  def main(args: Array[String]): Unit = {
+   def main(args: Array[String]): Unit = {
     StdIn.readInt()
     val inputs = Iterator.continually(StdIn.readLine()).takeWhile(_ != null).toList
     val cardList = for{
       in <- inputs
       val Array(suit, rankT, _*) = in.split(" ")
     }yield(Card(suit, rankT.toInt))
-    missingCardList(cardList.sorted).foreach(println _)
+    def from(card: Option[Card]): Stream[Option[Card]] = Stream.cons(card, from(card.flatMap(_.getNextCard)))
+    val fillCardList = from(Some(Card("S", 1))).takeWhile(_ != None).map(_.get).toList
+    (fillCardList diff cardList).foreach(println _)
   }
 }
 
