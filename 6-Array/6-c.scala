@@ -5,7 +5,7 @@ object Main{
   def main(args: Array[String]): Unit = {
     val houses = Map.empty[Int, Array[Array[Int]]]
     (1 to 4).foreach{ b =>
-      houses += (b -> Array.fill(3)(Array.fill(10)(0)))
+      houses += (b -> Array.ofDim[Int](3, 10))
     }
 
     val n = StdIn.readInt()
@@ -19,11 +19,9 @@ object Main{
         bl.foreach(f => println(" " + f.mkString(" ")))
       }
 
+      buildingPrint(houses(b))
       if(b != 4){
-        buildingPrint(houses(b))
         println("####################")
-      }else{
-        buildingPrint(houses(b))
       }
     }
   }
