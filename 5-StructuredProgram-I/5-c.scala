@@ -8,13 +8,16 @@ object Main {
       val Array(h, w, _*) = in.split(" ").map(_.toInt)
       }{
         if(h != 0 && w != 0){
-          for{i <- 0 until h; j <- 0 until w}{
-            if((i % 2 == 0 && j % 2 == 0) ||
-              (i % 2 != 0 && j % 2 != 0)) print("#")
-            else print(".")
-            if(j == w-1) println()
-          }
-          println()
+          println((List.tabulate(h, w){(i, j) =>
+            val isSharp = (i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0)
+            val isDot = !isSharp
+            val EOL = j == w-1
+
+            if(isSharp && EOL) "#\n"
+            else if(isDot && EOL) ".\n"
+            else if(isSharp) "#"
+            else "."
+          }).flatten.mkString)
         }
       }
   }
