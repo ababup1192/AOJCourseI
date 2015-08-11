@@ -9,7 +9,7 @@ object Main {
       }{
         if(h != 0 && w != 0){
           println((List.tabulate(h, w){(i, j) =>
-            if(j == w-1) '\n' else '#'
+            if(j == w-1) "#\n" else "#"
           }).flatten.mkString)
         }
       }
