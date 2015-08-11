@@ -9,9 +9,10 @@ object Main {
       }{
         if(h != 0 && w != 0){
           println((List.tabulate(h,  w){(i,  j) =>
-            if(j == w-1) "#\n"
-            else if(i == 0 || i == h-1 || j == 0 || j == w-1) "#"
+            val simbol = if(i == 0 || i == h-1 || j == 0 || j == w-1) "#"
             else "."
+            val EOS = if(j == w-1) "\n" else ""
+            simbol + EOS
           }).flatten.mkString)
         }
       }
