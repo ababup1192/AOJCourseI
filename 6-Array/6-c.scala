@@ -1,28 +1,20 @@
 import scala.io.StdIn
-import scala.collection.mutable.Map
 
 object Main{
   def main(args: Array[String]): Unit = {
-    val houses = Map.empty[Int, Array[Array[Int]]]
-    (1 to 4).foreach{ b =>
-      houses += (b -> Array.ofDim[Int](3, 10))
+
+    val input = scala.io.Source.stdin.getLines().toList.map(_.split(" ").map(_.toInt))
+    val buildingTable = List.tabulate(4, 3, 10) { (i, j, k) =>
+      input.collect {case Array(b, f, r, v) if b - 1 == i && f - 1 == j && r - 1 == k => v}.sum
     }
 
-    val n = StdIn.readInt()
-    (1 to n).foreach{ _ =>
-      val Array(b, f, r, v, _*) = StdIn.readLine().split(" ").map(_.toInt)
-      houses.get(b).foreach(building => {building(f-1)(r-1) += v})
-    }
-
-    (1 to 4).foreach{ b =>
-      def buildingPrint(bl: Array[Array[Int]]){
-        bl.foreach(f => println(" " + f.mkString(" ")))
+    for{
+      (building, bidx) <- buildingTable.zipWithIndex
+      } {
+        println(building.map(" " + _.mkString(" ")).mkString("\n"))
+        if(bidx != 4 - 1){
+          println("####################")
+        }
       }
-
-      buildingPrint(houses(b))
-      if(b != 4){
-        println("####################")
-      }
-    }
   }
 }
